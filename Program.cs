@@ -18,7 +18,7 @@ foreach (var folder in Directory.GetDirectories(@"C:\AMD"))
         Console.ForegroundColor = ConsoleColor.White;
         Console.Write(folder);
         Console.ForegroundColor = ConsoleColor.White;
-        Console.WriteLine($" ({size} B)");
+        Console.WriteLine($" ({FormatBytes(size)})");
     }
     catch (Exception ex)
     {
@@ -29,7 +29,23 @@ foreach (var folder in Directory.GetDirectories(@"C:\AMD"))
 Console.ForegroundColor = ConsoleColor.Green;
 Console.WriteLine("Done!");
 Console.ForegroundColor = ConsoleColor.White;
-Console.WriteLine($"Cleaned space: {totalSize} B");
+Console.WriteLine($"Cleaned space: {FormatBytes(totalSize)}");
 Console.ForegroundColor = ConsoleColor.Cyan;
-Console.WriteLine("Finished, press any key to continue");
+Console.WriteLine("Finished!, press any key to continue");
 Console.ReadLine();
+
+/* Thanks to https://stackoverflow.com/a/2082893/11756870
+ * I made some little changes to get an ulong instead of long
+ * and to simplify the code */
+static string FormatBytes(ulong bytes)
+{
+    string[] Suffix = { "B", "KB", "MB", "GB", "TB" };
+    int i;
+    double dblSByte = bytes;
+    for (i = 0; i < Suffix.Length && bytes >= 1024; i++, bytes /= 1024)
+    {
+        dblSByte = bytes / 1024.0;
+    }
+
+    return string.Format("{0:0.##} {1}", dblSByte, Suffix[i]);
+}

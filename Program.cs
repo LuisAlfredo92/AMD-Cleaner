@@ -1,15 +1,22 @@
 ﻿ulong totalSize = 0;
+
+#region Credits
 Console.ForegroundColor = ConsoleColor.Cyan;
 Console.Write("Made by: ");
 Console.ForegroundColor = ConsoleColor.White;
 Console.Write("LuisAlfredo92");
 Console.ForegroundColor = ConsoleColor.Cyan;
 Console.WriteLine(": https://github.com/LuisAlfredo92/AMD-Cleaner");
+#endregion
+
 Console.WriteLine("Starting...");
+
+// It will delete all the content on the AMD folder. It's harmless
 foreach (var folder in Directory.GetDirectories(@"C:\AMD"))
 {
     try
     {
+        // Gets the folder size
         ulong size = (ulong)new DirectoryInfo(folder).EnumerateFiles("*", SearchOption.AllDirectories).Sum(fi => fi.Length);
         totalSize += size;
         Directory.Delete(folder, true);
